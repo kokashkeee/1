@@ -18,23 +18,23 @@ public class ProductBasket {
             System.out.println("Невозможно добавить продукт");
         }
     }
-    public void getBasketPrice(){
+
+    public void printBasket(){
+        int isSpecialCount = 0;
         int priceCount = 0;
         if(basket[0] != null) {
             for (int i = 0; i < basket.length; i++) {
+                System.out.println(basket[i].toString());
                 priceCount += basket[i].getPrice();
-            }
-        }
-        System.out.println("Итого: " + priceCount);
-    }
-    public void printBasket(){
-        if(basket[0] != null) {
-            for (int i = 0; i < basket.length; i++) {
-                System.out.println(basket[i].getName() + ": " + basket[i].getPrice());
+                if(basket[i].isSpecial()){
+                    isSpecialCount++;
+                }
             }
         }else{
             System.out.println("в корзине пусто");
         }
+        System.out.println("Итого: " + priceCount);
+        System.out.println("Специальных товаров: " + isSpecialCount);
     }
     public boolean coin(String name){
         int count = 0;
