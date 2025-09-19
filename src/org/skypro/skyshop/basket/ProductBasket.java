@@ -6,12 +6,12 @@ public class ProductBasket {
     private Product[] basket;
     private int count;
 
-    public ProductBasket(){
-        this.basket = new Product[5];
+    public ProductBasket(int size){
+        this.basket = new Product[size];
         this.count = 0;
     }
     public void addInBasket(Product newProduct){
-        if(count < basket.length){
+        if(count < 5){
             basket[count] = newProduct;
             count++;
         }else{
