@@ -2,23 +2,33 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
-        Product product1 = new SimpleProduct("Сыр", 150);
+
+        Product product1 = new SimpleProduct("Сыр", 100);
         Product product2 = new FixPriceProduct("Хлеб");
-        Product product3 = new DiscountedProduct("Молоко", 90);
+        Product product3 = new DiscountedProduct("Молоко", 90, 50);
         Product product4 = new SimpleProduct("Яйца", 80);
         Product product5 = new SimpleProduct("Пиво", 110);
         Product product6 = new SimpleProduct("Сахар", 70);
 
+        try{
+            Product product7 = new SimpleProduct("", 0);
+            Product product8 = new FixPriceProduct("");
+            Product product9 = new DiscountedProduct("", 0, 110);
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
         ProductBasket basket = new ProductBasket(5);
 
         basket.addInBasket(product1);
@@ -42,19 +52,36 @@ public class App {
 
         SearchEngine searchEngines = new SearchEngine(5);
 
-        searchEngines.addInSearchList(product1);
-        searchEngines.addInSearchList(product2);
-        searchEngines.addInSearchList(product3);
-        searchEngines.addInSearchList(product4);
+//        searchEngines.addInSearchList(product1);
+//        searchEngines.addInSearchList(product2);
+//        searchEngines.addInSearchList(product3);
+//        searchEngines.addInSearchList(product4);
+//
+//        Article article = new Article("Купил 'Молоко' и сру три метра против ветра!", "Надоумил же меня Бог купить молоко на сайте, предоставляющем услуги обучения...");
+//
+//        searchEngines.addInSearchList(article);
+//        searchEngines.addInSearchList(product5);
+//
+//
+//        searchEngines.search("Молоко");
+//        searchEngines.search("Хлеб");
+//        searchEngines.search("Яблоки");
 
-        Article article = new Article("Купил 'Молоко' и сру три метра против ветра!", "Надоумил же меня Бог купить молоко на сайте, предоставляющем услуги обучения...");
+        Product productX = new SimpleProduct("СырСыСырСыр", 100);
+        Product productY = new SimpleProduct("СырСыСы", 100);
+        Product productZ = new SimpleProduct("Сырырырыр", 100);
+        Article articleX = new Article("сырсырсыр", "сырсыр");
+        searchEngines.addInSearchList(productX);
+        searchEngines.addInSearchList(productY);
+        searchEngines.addInSearchList(productZ);
+        searchEngines.addInSearchList(articleX);
+        try {
+            Searchable bestMatch = searchEngines.findBestMatch("Сыр");
+            System.out.println("Найден наиболее подходящий объект");
+            System.out.println("Объект: \n" + bestMatch.getStringRepresentation());
 
-        searchEngines.addInSearchList(article);
-        searchEngines.addInSearchList(product5);
-
-
-        searchEngines.search("Молоко");
-        searchEngines.search("Хлеб");
-        searchEngines.search("Яблоки");
+        } catch (BestResultNotFound e) {
+            System.out.println("ОШИБКА: " + e.getMessage());
+        }
     }
 }
