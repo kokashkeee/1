@@ -7,7 +7,7 @@ import java.util.List;
 public class ProductBasket {
     private List<Product> basket;
     private int priceCount;
-    private List deletedProducts = new LinkedList();
+    private List<String> deletedProducts = new LinkedList<>();
 
     public ProductBasket(){
         this.basket = new LinkedList<>();
@@ -50,7 +50,7 @@ public class ProductBasket {
         }
     }
 
-    public LinkedList deleteFromBasket(String name){
+    public LinkedList<String> deleteFromBasket(String name){
         for (int i = 0; i < basket.size(); i++) {
             if (basket.get(i).getName()==name){
                 deletedProducts.add(name);
