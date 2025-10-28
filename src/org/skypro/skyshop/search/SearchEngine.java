@@ -12,7 +12,7 @@ public class SearchEngine {
     private int count;
 
     public SearchEngine(){
-        this.searchable = new LinkedList();
+        this.searchable = new LinkedList<>();
         this.count = 0;
     }
 
