@@ -22,14 +22,14 @@ public class App {
         Product product5 = new SimpleProduct("Пиво", 110);
         Product product6 = new SimpleProduct("Сахар", 70);
 
-        try{
-            Product product7 = new SimpleProduct("", 0);
-            Product product8 = new FixPriceProduct("");
-            Product product9 = new DiscountedProduct("", 0, 110);
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
-        ProductBasket basket = new ProductBasket(5);
+//        try{
+//            Product product7 = new SimpleProduct("", 0);
+//            Product product8 = new FixPriceProduct("");
+//            Product product9 = new DiscountedProduct("", 0, 110);
+//        }catch (IllegalArgumentException e){
+//            System.out.println(e.getMessage());
+//        }
+        ProductBasket basket = new ProductBasket();
 
         basket.addInBasket(product1);
         basket.addInBasket(product2);
@@ -38,20 +38,20 @@ public class App {
         basket.addInBasket(product5);
         basket.addInBasket(product6);
 
-        basket.printBasket();
-
-        basket.coin("Хлеб");
-
-        basket.coin("Яблоки");
-
-        basket.clearBasket();
-
-        basket.printBasket();
-
-        basket.coin("Хлеб");
-
-        SearchEngine searchEngines = new SearchEngine(5);
-
+//        basket.printBasket();
+//
+//        basket.coin("Хлеб");
+//
+//        basket.coin("Яблоки");
+//
+//        basket.clearBasket();
+//
+//        basket.printBasket();
+//
+//        basket.coin("Хлеб");
+//
+//        SearchEngine searchEngines = new SearchEngine();
+//
 //        searchEngines.addInSearchList(product1);
 //        searchEngines.addInSearchList(product2);
 //        searchEngines.addInSearchList(product3);
@@ -66,22 +66,28 @@ public class App {
 //        searchEngines.search("Молоко");
 //        searchEngines.search("Хлеб");
 //        searchEngines.search("Яблоки");
+//
+//        Product productX = new SimpleProduct("СырСыСырСыр", 100);
+//        Product productY = new SimpleProduct("СырСыСы", 100);
+//        Product productZ = new SimpleProduct("Сырырырыр", 100);
+//        Article articleX = new Article("сырсырсыр", "сырсыр");
+//        searchEngines.addInSearchList(productX);
+//        searchEngines.addInSearchList(productY);
+//        searchEngines.addInSearchList(productZ);
+//        searchEngines.addInSearchList(articleX);
+//        try {
+//            Searchable bestMatch = searchEngines.findBestMatch("Сыр");
+//            System.out.println("Найден наиболее подходящий объект");
+//            System.out.println("Объект: \n" + bestMatch.getStringRepresentation());
+//
+//        } catch (BestResultNotFound e) {
+//            System.out.println("ОШИБКА: " + e.getMessage());
+//        }
+//
+        System.out.println(basket.deleteFromBasket("Творог"));
+        basket.printBasket();
+        basket.deleteFromBasket("Молоко");
+        basket.printBasket();
 
-        Product productX = new SimpleProduct("СырСыСырСыр", 100);
-        Product productY = new SimpleProduct("СырСыСы", 100);
-        Product productZ = new SimpleProduct("Сырырырыр", 100);
-        Article articleX = new Article("сырсырсыр", "сырсыр");
-        searchEngines.addInSearchList(productX);
-        searchEngines.addInSearchList(productY);
-        searchEngines.addInSearchList(productZ);
-        searchEngines.addInSearchList(articleX);
-        try {
-            Searchable bestMatch = searchEngines.findBestMatch("Сыр");
-            System.out.println("Найден наиболее подходящий объект");
-            System.out.println("Объект: \n" + bestMatch.getStringRepresentation());
-
-        } catch (BestResultNotFound e) {
-            System.out.println("ОШИБКА: " + e.getMessage());
-        }
     }
 }

@@ -1,47 +1,39 @@
 package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ProductBasket {
-    private Product[] basket;
-    private int count;
+    private List<Product> basket;
+    private int priceCount;
+    private List deletedProducts = new LinkedList();
 
-    public ProductBasket(int size){
-        this.basket = new Product[size];
-        this.count = 0;
+    public ProductBasket(){
+        this.basket = new LinkedList<>();
     }
+
     public void addInBasket(Product newProduct){
-        if(count < 5){
-            basket[count] = newProduct;
-            count++;
-        }else{
-            System.out.println("Невозможно добавить продукт");
-        }
+        priceCount += newProduct.getPrice();
+        basket.add(newProduct);
     }
 
     public void printBasket(){
         int isSpecialCount = 0;
-        int priceCount = 0;
-        if(basket[0] != null) {
-            for (int i = 0; i < basket.length; i++) {
-                System.out.println(basket[i].toString());
-                priceCount += basket[i].getPrice();
-                if(basket[i].isSpecial()){
-                    isSpecialCount++;
-                }
-            }
+        if(basket.get(0) != null) {
+            System.out.println(basket);
         }else{
             System.out.println("в корзине пусто");
         }
-        System.out.println("Итого: " + priceCount);
-        System.out.println("Специальных товаров: " + isSpecialCount);
+//        System.out.println("Итого: " + priceCount);
+//        System.out.println("Специальных товаров: " + isSpecialCount);
     }
     public boolean coin(String name){
         int count = 0;
         boolean c = false;
-        if(basket[0] != null) {
-            for (int i = 0; i < basket.length; i++) {
-                if (name == basket[i].getName()) {
+        if(basket.get(0) != null) {
+            for (int i = 0; i < basket.size(); i++) {
+                if (name == basket.get(i).getName()) {
                     count++;
                 }
             }
@@ -53,8 +45,21 @@ public class ProductBasket {
         return c;
     }
     public void clearBasket(){
-        for (int i = 0; i < basket.length; i++) {
-            basket[i]=null;
+        for (int i = 0; i < basket.size(); i++) {
+            basket.set(i, null);
         }
+    }
+
+    public LinkedList deleteFromBasket(String name){
+        for (int i = 0; i < basket.size(); i++) {
+            if (basket.get(i).getName()==name){
+                deletedProducts.add(name);
+                basket.remove(i);
+            }
+        }
+        if(deletedProducts.size() == 0){
+            deletedProducts.add("Список пуст");
+        }
+        return (LinkedList) deletedProducts;
     }
 }

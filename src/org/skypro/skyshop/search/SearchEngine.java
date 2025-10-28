@@ -3,30 +3,30 @@ import org.skypro.skyshop.exceptions.BestResultNotFound;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class SearchEngine {
 
-    Searchable[] searchable;
+    private List<Searchable> searchable;
     private int count;
 
-    public SearchEngine(int size){
-        this.searchable = new Searchable[size];
+    public SearchEngine(){
+        this.searchable = new LinkedList();
         this.count = 0;
     }
 
-    public Searchable[] search (String searchText){
-        int x = 0;
-        Searchable[] searchable2 = new Searchable[searchable.length];
-        for (int i = 0; i < searchable.length; i++) {
-            if((searchable[i].getSearchTerm()).contains(searchText)){
-                searchable2[x] = searchable[i];
-                x++;
+    public List search (String searchText){
+        for (int i = 0; i < searchable.size(); i++) {
+            if(!(searchable.get(i).getSearchTerm()).contains(searchText)){
+                searchable.remove(i);
             }
         }
-        System.out.println("Найдено " + x + " совпадений по запросу '" + searchText + "':");
-        for (int i = 0; i < x; i++) {
-            System.out.println(searchable2[i].toString());
+        System.out.println("Найдено " + searchable.size() + " совпадений по запросу '" + searchText + "':");
+        for (int i = 0; i < searchable.size(); i++) {
+            System.out.println(searchable);
         }
-        return searchable2;
+        return searchable;
     }
 
 
@@ -38,8 +38,8 @@ public class SearchEngine {
         Searchable bestMatch = null;
         int maxCount = -1;
 
-        for (int i = 0; i < count; i++) {
-            Searchable item = searchable[i];
+        for (int i = 0; i < searchable.size(); i++) {
+            Searchable item = searchable.get(i);
             if (item != null) {
                 String searchTerm = item.getSearchTerm();
                 int occurrences = countOccurrences(searchTerm, searchText);
@@ -76,12 +76,8 @@ public class SearchEngine {
     }
 
     public void addInSearchList(Searchable newSearch){
-        if(count < 5){
-            searchable[count] = newSearch;
-            count++;
-        }else{
-            System.out.println("Поисковый движок заполнен. Невозможно добавить новый элемент");
-        }
+        searchable.add(newSearch);
+        count++;
     }
 
 }
